@@ -12,5 +12,9 @@
   ],
   "author": "lg",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "colors": "^1.4.0",
+    "moment": "^2.29.0"
+  }
 }
