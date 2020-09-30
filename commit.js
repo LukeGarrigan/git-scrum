@@ -2,12 +2,13 @@ const moment = require('moment');
 const colors = require('colors');
 module.exports = class Commit {
 
-    constructor(commitLine) {
+    constructor(commitLine, branchName) {
         const tokens = commitLine.split(' ');
         this.name = tokens[2];
         this.message = this.getCommitMessage(tokens);
         this.date = this.getCommitDate(tokens[4]);
         this.timeSince = this.getTimeSince();
+        this.branchName = branchName;
     }
 
     getCommitMessage(tokens) {
@@ -19,7 +20,7 @@ module.exports = class Commit {
     }
 
     getCommitDate(timeSinceEpoch) {
-        let d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+        let d = new Date(0); 
         d.setUTCSeconds(timeSinceEpoch);
         return d;
     }
@@ -33,7 +34,6 @@ module.exports = class Commit {
     }
 
     print() {
-        console.log(colors.green(this.timeSince), colors.blue(this.message), `${colors.cyan("<" +this.name+ ">")}`);
+        console.log(colors.green(this.timeSince), this.message, `- ${colors.blue(this.branchName)}`,`${colors.cyan("<" +this.name+ ">")}`);
     }
 }
-
