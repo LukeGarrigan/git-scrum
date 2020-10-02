@@ -25,16 +25,23 @@ let hoursSinceLastWorked = Infinity;
 for (const dir of allDirs) {
     console.log(colors.trap('-------------------------------------------------------------------------------------------------'));
     console.log(colors.cyan(dir));
-    const branches = fs.readdirSync(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
+    outputAllBranchesInFolder(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
+}
 
+function outputAllBranchesInFolder(directoryPath) {
+    const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
-
-        const branch = new Branch(`${CWD}\\${dir}\\.git\\logs\\refs\\heads\\${branchName}`);
-        if (branch.timeSinceWorkedOn < hoursSinceLastWorked) {
-            hoursSinceLastWorked = branch.timeSinceWorkedOn;
+        const currentPath = `${directoryPath}\\${branchName}` 
+        if (fs.lstatSync(currentPath).isDirectory()) {
+            outputAllBranchesInFolder(currentPath)
+        } else {
+            const branch = new Branch(currentPath);
+            if (branch.timeSinceWorkedOn < hoursSinceLastWorked) {
+                hoursSinceLastWorked = branch.timeSinceWorkedOn;
+            }
+            const commits = getLatestCommits(branch.readFile(), branchName);
+            outputCommits(commits);
         }
-        const commits = getLatestCommits(branch.readFile(), branchName);
-        outputCommits(commits);
     }
 }
 
