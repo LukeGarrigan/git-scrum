@@ -5,12 +5,10 @@ const Commit = require('./commit');
 const Branch = require('./branch');
 const colors = require('colors');
 
-const CWD = process.cwd();
+let CWD = process.cwd();
 const currentFolder = fs.readdirSync(CWD);
 
 allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}\\${f}`).isDirectory());
-
-let commitsToOutput = [];
 
 if (allDirs.length == 0) {
     console.log(colors.red('There are no folders in this directory'));
@@ -28,7 +26,6 @@ for (const dir of allDirs) {
     console.log(colors.trap('-------------------------------------------------------------------------------------------------'));
     console.log(colors.cyan(dir));
     findAllCommitsInBranches(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
-    outputCommits();
 }
 
 function findAllCommitsInBranches(directoryPath) {
@@ -43,7 +40,7 @@ function findAllCommitsInBranches(directoryPath) {
                 hoursSinceLastWorked = branch.timeSinceWorkedOn;
             }
             const commits = getLatestCommits(branch.readFile(), branchName);
-            commitsToOutput.push(...commits);
+            outputCommits(commits);
         }
     }
 }
@@ -66,7 +63,7 @@ function getLatestCommits(branchFile, branchName) {
     return latestCommits;
 }
 
-function outputCommits() {
+function outputCommits(commitsToOutput) {
     for (let commit of commitsToOutput) {
         let timeSince = moment().diff(commit.date, 'hours');
 
