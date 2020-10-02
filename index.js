@@ -46,7 +46,7 @@ function outputAllBranchesInFolder(directoryPath) {
 }
 
 function getFoldersWithGitRepo(allDirs) {
-    return allDirs.filter(d => fs.readdirSync(`${CWD}\\${d}`).includes('.git'));
+    return allDirs.filter(d => fs.existsSync(`${CWD}\\${d}\\.git\\logs\\refs\\heads`))
 }
 
 function getLatestCommits(branchFile, branchName) {
