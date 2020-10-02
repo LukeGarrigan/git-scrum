@@ -5,8 +5,8 @@ module.exports = class Commit {
     constructor(commitLine, branchName) {
         const tokens = commitLine.split(' ');
         this.name = tokens[2];
+        this.date = this.getCommitDate(tokens);
         this.message = this.getCommitMessage(tokens);
-        this.date = this.getCommitDate(tokens[4]);
         this.timeSince = this.getTimeSince();
         this.branchName = branchName;
     }
@@ -19,10 +19,14 @@ module.exports = class Commit {
         return message;
     }
 
-    getCommitDate(timeSinceEpoch) {
-        let d = new Date(0); 
-        d.setUTCSeconds(timeSinceEpoch);
-        return d;
+    getCommitDate(tokens) {
+        for (let i = 4; i < 7; i++) { // can have multiple names
+            let d = new Date(0); 
+            d.setUTCSeconds(tokens[i]);
+            if (d instanceof Date && isFinite(d)) {
+                return d;
+            }
+        }
     }
 
     getTimeSince() {
