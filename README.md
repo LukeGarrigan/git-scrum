@@ -18,12 +18,18 @@
   
 </p>
 
-This tool allows your to output your last days work into the console:
+This tool allows your to output your last days work into the console allowing you to view what branch a particular commit was for.
+
+```> git-scrum```
+
+![https://i.imgur.com/TH99rVV.png](https://i.imgur.com/TH99rVV.png)
+
 
 
 ## How to use
 1. `npm install git-scrum -g` 
 2. Type `git-scrum` in the parent folder for all your repos
+
 
 
 
