@@ -41,8 +41,8 @@ module.exports = class Commit {
     calculateTimeSince() {
         const now = moment(new Date());
         const end = moment(this.date);
-        const duration = now.diff(end, 'hours');
-        let output = `${duration} hours ago`;
+        this.hoursSince = now.diff(end, 'hours');
+        let output = `${this.hoursSince} hours ago`;
         return output;
     }
 
