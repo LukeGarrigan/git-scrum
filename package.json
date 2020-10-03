@@ -4,7 +4,7 @@
   "description": "Output your commits to console",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "git",
@@ -12,7 +12,9 @@
   ],
   "author": "lg",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.4.2"
+  },
   "dependencies": {
     "colors": "^1.4.0",
     "moment": "^2.29.0"

@@ -3,33 +3,42 @@ const colors = require('colors');
 module.exports = class Commit {
 
     constructor(commitLine, branchName) {
-        const tokens = commitLine.split(' ');
-        this.name = tokens[2];
-        this.date = this.getCommitDate(tokens);
-        this.message = this.getCommitMessage(tokens);
-        this.timeSince = this.getTimeSince();
+        this.tokens = commitLine.split(' ');
+        this.date = this.extactCommitDate();
+        this.name = this.extractName();
+        this.message = this.extractCommitMessage();
+        this.timeSince = this.calculateTimeSince();
         this.branchName = branchName;
     }
 
-    getCommitMessage(tokens) {
+    extractCommitMessage() {
         let message = '';
-        for (let i = 6; i < tokens.length; i++) {
-            message += ' ' + tokens[i];
+        for (let i = this.indexOfDate + 2; i < this.tokens.length; i++) {
+            message += ' ' + this.tokens[i];
         }
-        return message;
+        return message.trim();
     }
 
-    getCommitDate(tokens) {
+    extactCommitDate() {
         for (let i = 4; i < 7; i++) { // can have multiple names
             let d = new Date(0); 
-            d.setUTCSeconds(tokens[i]);
+            d.setUTCSeconds(this.tokens[i]);
             if (d instanceof Date && isFinite(d)) {
+                this.indexOfDate = i;
                 return d;
             }
         }
     }
 
-    getTimeSince() {
+    extractName() {
+        let name = '';
+        for (let i = 2; i < this.indexOfDate -1; i++) {
+            name += this.tokens[i] + ' ';
+        }
+        return name.trim();
+    }
+
+    calculateTimeSince() {
         const now = moment(new Date());
         const end = moment(this.date);
         const duration = now.diff(end, 'hours');
