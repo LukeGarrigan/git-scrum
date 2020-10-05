@@ -42,8 +42,7 @@ module.exports = class Commit {
         const now = moment(new Date());
         const end = moment(this.date);
         this.hoursSince = now.diff(end, 'hours');
-        let output = `${this.hoursSince} hours ago`;
-        return output;
+        return moment(this.date).fromNow();
     }
 
     print() {
