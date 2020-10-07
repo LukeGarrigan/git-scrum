@@ -46,6 +46,6 @@ module.exports = class Commit {
     }
 
     print() {
-        console.log(colors.green(this.timeSince), this.message, `- ${colors.blue(this.branchName)}`,`${colors.cyan("<" +this.name+ ">")}`);
+        console.log(colors.green(this.timeSince), this.message, `- ${colors.yellow(this.branchName)}`,`${colors.cyan("<" +this.name+ ">")}`);
     }
 }
