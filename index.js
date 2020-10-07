@@ -85,18 +85,12 @@ function findAllCommitsInBranches(directoryPath) {
 }
 
 function outputCommits(commitsToOutput) {
-
-    let anyRecentCommits = false;
     for (let commit of commitsToOutput) {
         let timeSince = moment().diff(commit.date, 'hours');
 
         if (timeSince <= (hoursSinceLastWorked + 12)) {
             commit.print();
         }
-    }
-
-    if (!anyRecentCommits) {
-        console.log("There are no recent commits for this repo");
     }
 }
 
