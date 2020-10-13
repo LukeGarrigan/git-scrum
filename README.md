@@ -22,7 +22,7 @@ This tool allows your to output your last days work into the console allowing yo
 
 ```> git-scrum```
 
-![https://i.imgur.com/orGtxdf.png](https://i.imgur.com/orGtxdf.png)
+![https://user-images.githubusercontent.com/12545967/95824773-c8485000-0d27-11eb-80f2-c4b0bfb88519.gif](https://user-images.githubusercontent.com/12545967/95824773-c8485000-0d27-11eb-80f2-c4b0bfb88519.gif)
 
 
 
