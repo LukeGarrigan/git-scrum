@@ -20,7 +20,9 @@
   </a>
 </p>
 
-This tool allows your to output your last days work into the console allowing you to view what branch a particular commit was for.
+A tool I wrote to make my life a little easier. On a daily basis I could be working in a number branches spread across a tonne of repositories, so keeping tabs on *exactly* what I did the previous day could oftentimes be quite a challenge. There are other tools like this but none seem to output the branch name to the console, and to me the branch of a repo contains more context than my lousy commit messages, so it's needed.
+
+
 
 ```> git-scrum```
 
