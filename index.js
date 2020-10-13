@@ -28,7 +28,7 @@ for (const dir of allDirs) {
 }
 
 for (const dir of allDirs) {
-    console.log(colors.cyan(dir));
+    console.log(colors.cyan.underline(dir))
     findAllCommitsInBranches(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
 }
 
