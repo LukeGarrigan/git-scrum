@@ -1,6 +1,6 @@
 
 <h1 align="center">
-  git-scrum 🔎
+  git-scrum 🔎 🌴
   <br>
 </h1>
 
@@ -14,8 +14,10 @@
   <a href="https://twitter.com/intent/follow?screen_name=luke_garrigan">
       <img src="https://img.shields.io/twitter/follow/luke_garrigan.svg?label=Follow">
   </a>
- 
   
+  <a href="https://travis-ci.org/LukeGarrigan/git-scrum.svg?branch=master">
+    <img src="https://travis-ci.org/LukeGarrigan/git-scrum.svg?branch=master">
+  </a>
 </p>
 
 This tool allows your to output your last days work into the console allowing you to view what branch a particular commit was for.
