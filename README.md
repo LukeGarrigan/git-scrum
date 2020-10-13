@@ -11,13 +11,15 @@
       <img src="https://img.shields.io/github/issues/LukeGarrigan/git-scrum.svg">
   </a>
   
+  <a href="https://travis-ci.org/LukeGarrigan/git-scrum.svg?branch=master">
+    <img src="https://travis-ci.org/LukeGarrigan/git-scrum.svg?branch=master">
+  </a>
+  
   <a href="https://twitter.com/intent/follow?screen_name=luke_garrigan">
       <img src="https://img.shields.io/twitter/follow/luke_garrigan.svg?label=Follow">
   </a>
   
-  <a href="https://travis-ci.org/LukeGarrigan/git-scrum.svg?branch=master">
-    <img src="https://travis-ci.org/LukeGarrigan/git-scrum.svg?branch=master">
-  </a>
+
 </p>
 
 A tool I wrote to make my life a little easier. On a daily basis I could be working in a number branches spread across a tonne of repositories, so keeping tabs on *exactly* what I did the previous day could oftentimes be quite a challenge. There are other tools like this but none seem to output the branch name to the console, and to me the branch of a repo contains more context than my lousy commit messages, so it's needed.
