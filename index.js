@@ -64,7 +64,7 @@ function findAllCommitsInBranches(directoryPath) {
         } else {
             const branch = new Branch(currentPath);
             const commits = getLatestCommits(branch.readFile(), branchName);
-            outputCommits(commits);
+            outputCommits(commits, branchName);
         }
     }
 }
@@ -83,7 +83,9 @@ function findAllCommitsInBranches(directoryPath) {
     return latestCommits;
 }
 
-function outputCommits(commitsToOutput) {
+function outputCommits(commitsToOutput, branchName) {
+    
+    console.log(`${colors.green(branchName)}`);
     for (let commit of commitsToOutput) {
         commit.print();
     }
