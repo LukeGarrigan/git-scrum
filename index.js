@@ -76,7 +76,7 @@ function findAllCommitsInBranches(directoryPath) {
     let latestCommits = [];
     for (let line of lines) {
         let commit = new Commit(line, branchName);
-        if (commit.hoursSince < (hoursSinceLastWorked + 12)) {
+        if (commit.hoursSince < (hoursSinceLastWorked + 24)) {
             latestCommits.push(commit);
         }
     }
@@ -85,11 +85,7 @@ function findAllCommitsInBranches(directoryPath) {
 
 function outputCommits(commitsToOutput) {
     for (let commit of commitsToOutput) {
-        let timeSince = moment().diff(commit.date, 'hours');
-
-        if (timeSince <= (hoursSinceLastWorked + 12)) {
-            commit.print();
-        }
+        commit.print();
     }
 }
 
