@@ -35,7 +35,7 @@ for (const dir of allDirs) {
 function findTimeSinceLastCommit(directoryPath) {
     const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
-        const currentPath = `${directoryPath}\\${branchName}` 
+        const currentPath = `${directoryPath}\\${branchName}`;
         if (fs.lstatSync(currentPath).isDirectory()) {
             findTimeSinceLastCommit(currentPath)
         } else {
@@ -43,10 +43,9 @@ function findTimeSinceLastCommit(directoryPath) {
             const branchFile = branch.readFile();
             let lines = branchFile.split('\n');
             lines = lines.filter(line => line.includes('commit'));
-        
+
             for (let line of lines) {
                 let commit = new Commit(line, branchName);
-                
                 if (commit.hoursSince < hoursSinceLastWorked) {
                     hoursSinceLastWorked = commit.hoursSince;
                 }
@@ -58,9 +57,9 @@ function findTimeSinceLastCommit(directoryPath) {
 function findAllCommitsInBranches(directoryPath) {
     const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
-        const currentPath = `${directoryPath}\\${branchName}` 
+        const currentPath = `${directoryPath}\\${branchName}`;
         if (fs.lstatSync(currentPath).isDirectory()) {
-            findAllCommitsInBranches(currentPath)
+            findAllCommitsInBranches(currentPath);
         } else {
             const branch = new Branch(currentPath);
             const commits = getLatestCommits(branch.readFile(), branchName);
@@ -69,7 +68,7 @@ function findAllCommitsInBranches(directoryPath) {
     }
 }
 
- function getLatestCommits(branchFile, branchName) {
+function getLatestCommits(branchFile, branchName) {
     let lines = branchFile.split('\n');
     lines = lines.filter(line => line.includes('commit'));
 
@@ -84,8 +83,10 @@ function findAllCommitsInBranches(directoryPath) {
 }
 
 function outputCommits(commitsToOutput, branchName) {
-    
-    console.log(`${colors.green(branchName)}`);
+    if (commitsToOutput && commitsToOutput.length > 0) {
+        console.log(`${colors.green(branchName)}`);
+    }
+
     for (let commit of commitsToOutput) {
         commit.print();
     }
