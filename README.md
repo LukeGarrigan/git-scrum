@@ -10,8 +10,8 @@
   <a href="https://github.com/lukegarrigan/driver.js/blob/master/license">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-  <a href="https://npmjs.org/package/git-scrum.js">
-    <img src="https://img.shields.io/npm/v/git-scrum.js.svg" alt="version" />
+  <a href="https://npmjs.org/package/git-scrum">
+    <img src="https://img.shields.io/npm/v/git-scrum.svg" alt="version" />
   </a>
    <a href="https://GitHub.com/LukeGarrigan/git-scrum/issues/">
       <img src="https://img.shields.io/github/issues/LukeGarrigan/git-scrum.svg">
