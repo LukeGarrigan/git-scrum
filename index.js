@@ -29,7 +29,10 @@ for (const dir of allDirs) {
 
 for (const dir of allDirs) {
     console.log(colors.cyan.underline(dir))
-    findAllCommitsInBranches(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
+    var foundCommits = findAllCommitsInBranches(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
+    if (foundCommits) {
+        console.log('')
+    }
 }
 
 function findTimeSinceLastCommit(directoryPath) {
@@ -55,6 +58,7 @@ function findTimeSinceLastCommit(directoryPath) {
 }
 
 function findAllCommitsInBranches(directoryPath) {
+    let foundCommitsToOutput = false;
     const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
         const currentPath = `${directoryPath}\\${branchName}`;
@@ -63,9 +67,14 @@ function findAllCommitsInBranches(directoryPath) {
         } else {
             const branch = new Branch(currentPath);
             const commits = getLatestCommits(branch.readFile(), branchName);
-            outputCommits(commits, branchName);
+
+            if (commits && commits.length > 0) {
+                foundCommitsToOutput = true;
+                outputCommits(commits, branchName);
+            }
         }
     }
+    return foundCommitsToOutput;
 }
 
 function getLatestCommits(branchFile, branchName) {
@@ -83,10 +92,7 @@ function getLatestCommits(branchFile, branchName) {
 }
 
 function outputCommits(commitsToOutput, branchName) {
-    if (commitsToOutput && commitsToOutput.length > 0) {
-        console.log(`${colors.green(branchName)}`);
-    }
-
+    console.log(`${colors.green(branchName)}`);
     for (let commit of commitsToOutput) {
         commit.print();
     }
