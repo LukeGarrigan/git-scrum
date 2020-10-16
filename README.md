@@ -27,7 +27,7 @@ A tool I wrote to make my life a little easier. On a daily basis I could be work
 
 ```> git-scrum```
 
-![https://user-images.githubusercontent.com/12545967/95824773-c8485000-0d27-11eb-80f2-c4b0bfb88519.gif](https://user-images.githubusercontent.com/12545967/95824773-c8485000-0d27-11eb-80f2-c4b0bfb88519.gif)
+![https://user-images.githubusercontent.com/12545967/96227261-cc74a780-0f8b-11eb-9372-62aec3b789c4.gif](https://user-images.githubusercontent.com/12545967/96227261-cc74a780-0f8b-11eb-9372-62aec3b789c4.gif)
 
 
 
