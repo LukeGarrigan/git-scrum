@@ -8,7 +8,7 @@ const colors = require('colors');
 let CWD = process.cwd();
 const currentFolder = fs.readdirSync(CWD);
 
-allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}\\${f}`).isDirectory());
+allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}/${f}`).isDirectory());
 
 if (allDirs.length == 0) {
     console.log(colors.red('There are no folders in this directory'));
@@ -24,18 +24,18 @@ if (allDirs.length == 0) {
 let hoursSinceLastWorked = Infinity;
 
 for (const dir of allDirs) {
-    findTimeSinceLastCommit(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
+    findTimeSinceLastCommit(`${CWD}/${dir}/.git/logs/refs/heads`);
 }
 
 for (const dir of allDirs) {
     console.log(colors.cyan.underline(dir))
-    findAllCommitsInBranches(`${CWD}\\${dir}\\.git\\logs\\refs\\heads`);
+    findAllCommitsInBranches(`${CWD}/${dir}/.git/logs/refs/heads`);
 }
 
 function findTimeSinceLastCommit(directoryPath) {
     const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
-        const currentPath = `${directoryPath}\\${branchName}`;
+        const currentPath = `${directoryPath}/${branchName}`;
         if (fs.lstatSync(currentPath).isDirectory()) {
             findTimeSinceLastCommit(currentPath)
         } else {
@@ -57,7 +57,7 @@ function findTimeSinceLastCommit(directoryPath) {
 function findAllCommitsInBranches(directoryPath) {
     const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
-        const currentPath = `${directoryPath}\\${branchName}`;
+        const currentPath = `${directoryPath}/${branchName}`;
         if (fs.lstatSync(currentPath).isDirectory()) {
             findAllCommitsInBranches(currentPath);
         } else {
@@ -93,5 +93,5 @@ function outputCommits(commitsToOutput, branchName) {
 }
 
 function getFoldersWithGitRepo(allDirs) {
-    return allDirs.filter(d => fs.existsSync(`${CWD}\\${d}\\.git\\logs\\refs\\heads`))
+    return allDirs.filter(d => fs.existsSync(`${CWD}/${d}/.git/logs/refs/heads`))
 }

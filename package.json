@@ -1,6 +1,6 @@
 {
   "name": "git-scrum",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Output your commits to console",
   "main": "index.js",
   "scripts": {
