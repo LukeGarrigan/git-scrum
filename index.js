@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const fs = require('fs');
-const moment = require('moment');
 const Commit = require('./commit');
 const Branch = require('./branch');
 const colors = require('colors');
