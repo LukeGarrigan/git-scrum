@@ -8,7 +8,7 @@ const colors = require('colors');
 let CWD = process.cwd();
 const currentFolder = fs.readdirSync(CWD);
 
-allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}/${f}`).isDirectory());
+let allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}/${f}`).isDirectory());
 
 if (allDirs.length == 0) {
     console.log(colors.red('There are no folders in this directory'));
