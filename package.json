@@ -13,6 +13,7 @@
   "author": "lg",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.26.0",
     "jest": "^26.4.2"
   },
   "dependencies": {
