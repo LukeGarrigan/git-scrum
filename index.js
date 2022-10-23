@@ -3,6 +3,7 @@ const fs = require('fs');
 const Commit = require('./commit');
 const Branch = require('./branch');
 const colors = require('colors');
+const process = require('node:process');
 
 let CWD = process.cwd();
 const currentFolder = fs.readdirSync(CWD);
