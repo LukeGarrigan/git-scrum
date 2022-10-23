@@ -1,7 +1,7 @@
 const moment = require('moment');
 const colors = require('colors');
-module.exports = class Commit {
 
+module.exports = class Commit {
     constructor(commitLine, branchName) {
         this.tokens = commitLine.split(' ');
         this.date = this.extactCommitDate();
