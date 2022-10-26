@@ -21,7 +21,7 @@ module.exports = class Commit {
 
     extactCommitDate() {
         for (let i = 4; i < 7; i++) { // can have multiple names
-            let d = new Date(0); 
+            let d = new Date(0);
             d.setUTCSeconds(this.tokens[i]);
             if (d instanceof Date && isFinite(d)) {
                 this.indexOfDate = i;
@@ -32,7 +32,7 @@ module.exports = class Commit {
 
     extractName() {
         let name = '';
-        for (let i = 2; i < this.indexOfDate -1; i++) {
+        for (let i = 2; i < this.indexOfDate - 1; i++) {
             name += this.tokens[i] + ' ';
         }
         return name.trim();

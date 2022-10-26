@@ -9,9 +9,9 @@ module.exports = class Branch {
 
     calcTimeSinceWorkedOn() {
         const fileStats = fs.statSync(this.fileLocation);
-        return moment().diff(fileStats.mtimeMs, 'hours') 
+        return moment().diff(fileStats.mtimeMs, 'hours')
     }
- 
+
     readFile() {
         return fs.readFileSync(this.fileLocation, 'utf-8');
     }
