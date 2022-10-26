@@ -1,48 +1,43 @@
 #!/usr/bin/env node
 const fs = require('fs');
+const colors = require('colors');
+const path = require('path');
+const process = require('process');
+
 const Commit = require('./commit');
 const Branch = require('./branch');
-const colors = require('colors');
-const process = require('node:process');
+const repositories = require('./repositories');
 
-let CWD = process.cwd();
-const currentFolder = fs.readdirSync(CWD);
+let repos;
 
-let allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}/${f}`).isDirectory());
-
-if (allDirs.length == 0) {
+try {
+    repos = repositories(process.cwd());
+} catch (e) {
     console.log(colors.red('There are no folders in this directory'));
-    return;
-}
-
-allDirs = getFoldersWithGitRepo(allDirs);
-if (allDirs.length == 0) {
-    console.log(colors.red('There are no repositories in any of the folders in this directory'));
-    return;
+    process.exit(1);
 }
 
 let hoursSinceLastWorked = Infinity;
 
-for (const dir of allDirs) {
-    findTimeSinceLastCommit(`${CWD}/${dir}/.git/logs/refs/heads`);
-}
+repos.forEach(findTimeSinceLastCommit);
 
-for (const dir of allDirs) {
-    console.log(colors.cyan.underline(dir))
-    findAllCommitsInBranches(`${CWD}/${dir}/.git/logs/refs/heads`);
-}
+repos.forEach((repo) => {
+    const dir = path.basename(path.join(repo, '..', '..', '..', '..'));
+    console.log(colors.cyan.underline(dir));
+    findAllCommitsInBranches(repo);
+});
 
 function findTimeSinceLastCommit(directoryPath) {
     const branches = fs.readdirSync(directoryPath);
     for (let branchName of branches) {
         const currentPath = `${directoryPath}/${branchName}`;
         if (fs.lstatSync(currentPath).isDirectory()) {
-            findTimeSinceLastCommit(currentPath)
+            findTimeSinceLastCommit(currentPath);
         } else {
             const branch = new Branch(currentPath);
             const branchFile = branch.readFile();
             let lines = branchFile.split('\n');
-            lines = lines.filter(line => line.includes('commit'));
+            lines = lines.filter((line) => line.includes('commit'));
 
             for (let line of lines) {
                 let commit = new Commit(line, branchName);
@@ -73,12 +68,12 @@ function findAllCommitsInBranches(directoryPath) {
 
 function getLatestCommits(branchFile, branchName) {
     let lines = branchFile.split('\n');
-    lines = lines.filter(line => line.includes('commit'));
+    lines = lines.filter((line) => line.includes('commit'));
 
     let latestCommits = [];
     for (let line of lines) {
         let commit = new Commit(line, branchName);
-        if (commit.hoursSince < (hoursSinceLastWorked + 24)) {
+        if (commit.hoursSince < hoursSinceLastWorked + 24) {
             latestCommits.push(commit);
         }
     }
@@ -90,8 +85,4 @@ function outputCommits(commitsToOutput, branchName) {
     for (let commit of commitsToOutput) {
         commit.print();
     }
-}
-
-function getFoldersWithGitRepo(allDirs) {
-    return allDirs.filter(d => fs.existsSync(`${CWD}/${d}/.git/logs/refs/heads`))
 }
