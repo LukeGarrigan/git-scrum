@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
+    "commander": "^9.4.1",
     "moment": "^2.29.0"
   },
   "bin": {
@@ -38,7 +39,9 @@
     "parserOptions": {
       "ecmaVersion": "latest"
     },
-    "plugins": ["jest"],
+    "plugins": [
+      "jest"
+    ],
     "rules": {}
   }
 }
