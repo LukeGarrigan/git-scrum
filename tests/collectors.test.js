@@ -2,7 +2,7 @@ const path = require('path');
 
 const { collectRepositories } = require('../collectors');
 
-const repo = path.join(__dirname, '..');
+const repo = path.resolve();
 
 describe('collectRepositories()', () => {
     describe('when passing a repository', () => {
@@ -13,7 +13,8 @@ describe('collectRepositories()', () => {
 
     describe('when a directory without subdirectories', () => {
         test('should throw an error', () => {
-            expect(() => collectRepositories(__dirname)).toThrow(/There are no folders/);
+            const testDir = path.join(repo, 'tests');
+            expect(() => collectRepositories(testDir)).toThrow(/There are no folders/);
         });
     });
 
