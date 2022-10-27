@@ -1,83 +1,48 @@
 #!/usr/bin/env node
-const fs = require('fs');
+
 const colors = require('colors');
 const path = require('path');
 const process = require('process');
+const moment = require('moment');
 
-const Commit = require('./commit');
-const Branch = require('./branch');
-const repositories = require('./repositories');
-
-let repos;
+const { collectCommits } = require('./collectors');
 
 try {
-    repos = repositories(process.cwd());
+    const repoCommits = collectCommits(process.cwd());
+
+    const latestCommit = getLatestCommit(repoCommits);
+    const since = moment(latestCommit).subtract(24, 'hours');
+
+    repoCommits.forEach(displayLatestCommitsSince(since));
 } catch (e) {
-    console.log(colors.red('There are no folders in this directory'));
+    console.log(e);
     process.exit(1);
 }
 
-let hoursSinceLastWorked = Infinity;
+function getLatestCommit(repoCommits) {
+    const dates = repoCommits.flatMap(({ commitsByBranches }) =>
+        commitsByBranches.flatMap(({ commits }) => commits.map((commit) => commit.date))
+    );
 
-repos.forEach(findTimeSinceLastCommit);
-
-repos.forEach((repo) => {
-    const dir = path.basename(path.join(repo, '..', '..', '..', '..'));
-    console.log(colors.cyan.underline(dir));
-    findAllCommitsInBranches(repo);
-});
-
-function findTimeSinceLastCommit(directoryPath) {
-    const branches = fs.readdirSync(directoryPath);
-    for (let branchName of branches) {
-        const currentPath = `${directoryPath}/${branchName}`;
-        if (fs.lstatSync(currentPath).isDirectory()) {
-            findTimeSinceLastCommit(currentPath);
-        } else {
-            const branch = new Branch(currentPath);
-            const branchFile = branch.readFile();
-            let lines = branchFile.split('\n');
-            lines = lines.filter((line) => line.includes('commit'));
-
-            for (let line of lines) {
-                let commit = new Commit(line, branchName);
-                if (commit.hoursSince < hoursSinceLastWorked) {
-                    hoursSinceLastWorked = commit.hoursSince;
-                }
-            }
-        }
-    }
+    return Math.max.apply(null, dates);
 }
 
-function findAllCommitsInBranches(directoryPath) {
-    const branches = fs.readdirSync(directoryPath);
-    for (let branchName of branches) {
-        const currentPath = `${directoryPath}/${branchName}`;
-        if (fs.lstatSync(currentPath).isDirectory()) {
-            findAllCommitsInBranches(currentPath);
-        } else {
-            const branch = new Branch(currentPath);
-            const commits = getLatestCommits(branch.readFile(), branchName);
+function displayLatestCommitsSince(since) {
+    return ({ repo, commitsByBranches }) => {
+        const repoName = path.basename(path.join(repo, '..', '..', '..', '..'));
 
-            if (commits && commits.length > 0) {
+        console.log(colors.cyan.underline(repoName));
+
+        commitsByBranches.forEach(({ branch, commits }) => {
+            const branchName = path.relative(repo, branch.fileLocation);
+
+            const latestCommits = commits.filter((commit) => since.isBefore(commit.date));
+
+            if (latestCommits && latestCommits.length > 0) {
                 outputCommits(commits, branchName);
             }
-        }
-    }
-}
-
-function getLatestCommits(branchFile, branchName) {
-    let lines = branchFile.split('\n');
-    lines = lines.filter((line) => line.includes('commit'));
-
-    let latestCommits = [];
-    for (let line of lines) {
-        let commit = new Commit(line, branchName);
-        if (commit.hoursSince < hoursSinceLastWorked + 24) {
-            latestCommits.push(commit);
-        }
-    }
-    return latestCommits;
+        });
+    };
 }
 
 function outputCommits(commitsToOutput, branchName) {

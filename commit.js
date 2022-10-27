@@ -1,14 +1,12 @@
-const moment = require('moment');
 const colors = require('colors');
+const moment = require('moment');
 
 module.exports = class Commit {
-    constructor(commitLine, branchName) {
+    constructor(commitLine) {
         this.tokens = commitLine.split(' ');
         this.date = this.extactCommitDate();
         this.name = this.extractName();
         this.message = this.extractCommitMessage();
-        this.timeSince = this.calculateTimeSince();
-        this.branchName = branchName;
     }
 
     extractCommitMessage() {
@@ -38,14 +36,8 @@ module.exports = class Commit {
         return name.trim();
     }
 
-    calculateTimeSince() {
-        const now = moment(new Date());
-        const end = moment(this.date);
-        this.hoursSince = now.diff(end, 'hours');
-        return moment(this.date).fromNow();
-    }
-
     print() {
-        console.log('-', this.message, colors.green(`(${this.timeSince})`),`${colors.cyan("<" +this.name+ ">")}`);
+        const hoursSince = moment(this.date).fromNow();
+        console.log('-', this.message, colors.green(`(${hoursSince})`), `${colors.cyan("<" + this.name + ">")}`);
     }
 }
