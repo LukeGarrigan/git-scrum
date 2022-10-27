@@ -48,7 +48,7 @@ function getAllCommitsByBranches(repo) {
         const commits = branchFile
             .split('\n')
             .filter((line) => line.includes('commit'))
-            .map((line) => new Commit(line));
+            .map((line) => Commit.fromCommitLine(line));
 
         return { branch, commits };
     });
