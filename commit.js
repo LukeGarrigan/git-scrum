@@ -1,6 +1,3 @@
-const colors = require('colors');
-const moment = require('moment');
-
 module.exports = class Commit {
     constructor(commitLine) {
         this.tokens = commitLine.split(' ');
@@ -34,10 +31,5 @@ module.exports = class Commit {
             name += this.tokens[i] + ' ';
         }
         return name.trim();
-    }
-
-    print() {
-        const hoursSince = moment(this.date).fromNow();
-        console.log('-', this.message, colors.green(`(${hoursSince})`), `${colors.cyan("<" + this.name + ">")}`);
     }
 }
