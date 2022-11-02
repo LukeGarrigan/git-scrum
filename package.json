@@ -4,6 +4,7 @@
   "description": "Output your commits to console",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --ext .js",
     "test": "jest"
   },
   "keywords": [
@@ -13,6 +14,8 @@
   "author": "lg",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-plugin-jest": "^27.1.3",
     "jest": "^26.4.2"
   },
   "dependencies": {
@@ -21,5 +24,21 @@
   },
   "bin": {
     "git-scrum": "./index.js"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true,
+      "jest/globals": true
+    },
+    "extends": "eslint:recommended",
+    "overrides": [],
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "plugins": ["jest"],
+    "rules": {}
   }
 }

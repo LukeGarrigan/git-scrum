@@ -1,7 +1,7 @@
 const fs = require('fs');
 const moment = require('moment');
-module.exports = class Branch {
 
+module.exports = class Branch {
     constructor(fileLocation) {
         this.fileLocation = fileLocation;
         this.timeSinceWorkedOn = this.calcTimeSinceWorkedOn();

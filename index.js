@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 const fs = require('fs');
-const moment = require('moment');
 const Commit = require('./commit');
 const Branch = require('./branch');
 const colors = require('colors');
+const process = require('node:process');
 
 let CWD = process.cwd();
 const currentFolder = fs.readdirSync(CWD);
 
-allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}/${f}`).isDirectory());
+let allDirs = currentFolder.filter(f => fs.lstatSync(`${CWD}/${f}`).isDirectory());
 
 if (allDirs.length == 0) {
     console.log(colors.red('There are no folders in this directory'));
