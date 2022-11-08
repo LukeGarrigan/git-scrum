@@ -1,7 +1,10 @@
 const moment = require('moment');
 
+const parseAmount = (amount) =>
+    amount.startsWith('a') ? 1 : parseInt(matches[1], 10);
+
 const date = (input) => {
-    const matches = input.match(/(\d+) (\w+)( ago)?/);
+    const matches = input.match(/(\d+|an?) (\w+)( ago)?/);
     if (matches) {
         const unit = moment.normalizeUnits(matches[2]);
 
@@ -9,7 +12,9 @@ const date = (input) => {
             throw new Error('Could not parse date');
         }
 
-        return moment().subtract(matches[1], matches[2]);
+        const amount = parseAmount(matches[1]);
+
+        return moment().subtract(amount, matches[2]);
     }
 
     return moment(input);
