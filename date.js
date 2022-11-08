@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 const parseAmount = (amount) =>
-    amount.startsWith('a') ? 1 : parseInt(matches[1], 10);
+    amount.startsWith('a') ? 1 : parseInt(amount, 10);
 
 const date = (input) => {
     const matches = input.match(/(\d+|an?) (\w+)( ago)?/);
