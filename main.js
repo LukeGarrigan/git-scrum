@@ -16,7 +16,7 @@ function displayLatestCommitsSince(since) {
             const latestCommits = commits.filter((commit) => since.isBefore(commit.date));
 
             if (latestCommits.length > 0) {
-                outputCommits(commits, branchName);
+                outputCommits(latestCommits, branchName);
             }
         });
     };
