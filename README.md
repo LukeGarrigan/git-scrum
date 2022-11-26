@@ -36,6 +36,23 @@ A tool I wrote to make my life a little easier. On a daily basis I could be work
 2. Type `git-scrum` in the parent folder for all your repos
 
 
+### Options
+#### Relative
+
+```bash
+$ git-scrum --since 'a week ago'
+```
+
+```bash
+$ git-scrum --since '1 day ago'
+```
+
+#### Specific date
+
+```bash
+$ git-scrum --since '2022-10-01'
+```
+
 
 
 
